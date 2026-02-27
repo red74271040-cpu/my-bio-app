@@ -157,4 +157,43 @@ with tab4:
                         </div>""", unsafe_allow_html=True)
                 except Exception as e: st.error(f"Error: {e}")
     with cp2:
+
         st.markdown('<div class="guide-box"><b>Primer Guide</b><br>- 유전자 양 끝단을 기준으로 프라이머 쌍을 설계합니다.<br>- Reverse는 상보적 역서열로 자동 변환됩니다.</div>', unsafe_allow_html=True)
+
+# [상단 import에 추가]
+from Bio import Entrez
+
+# [분석 결과 출력 루프 내부에 추가]
+# (기존 BLAST 결과가 나오는 for문 안쪽 하단에 넣으면 좋습니다)
+
+st.markdown("### 📄 Related Publications (PubMed)")
+with st.spinner("관련 논문 찾는 중..."):
+    try:
+        # 이메일은 NCBI 에티켓상 필요합니다 (아무 이메일이나 가능)
+        Entrez.email = "your_email@example.com" 
+        
+        # 유전자 타이틀을 키워드로 논문 검색 (최근 3개)
+        search_query = f"{alignment.accession} OR {analysis.split(':')[0]}"
+        handle = Entrez.esearch(db="pubmed", term=search_query, retmax=3)
+        record = Entrez.read(handle)
+        id_list = record["IdList"]
+        
+        if id_list:
+            for pm_id in id_list:
+                summary_handle = Entrez.esummary(db="pubmed", id=pm_id)
+                summary = Entrez.read(summary_handle)
+                title = summary[0]['Title']
+                pub_date = summary[0]['PubDate']
+                
+                st.markdown(f"""
+                <div style="font-size: 14px; margin-bottom: 8px; border-left: 2px solid #EEE; padding-left: 10px;">
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/{pm_id}/" target="_blank" style="text-decoration: none; color: #0984e3; font-weight: 500;">
+                        {title}
+                    </a><br>
+                    <span style="font-size: 12px; color: #B2BEC3;">Published: {pub_date} | PMID: {pm_id}</span>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.write("관련된 최신 논문을 찾지 못했습니다.")
+    except Exception as e:
+        st.write("논문 정보를 가져오는 데 실패했습니다.")
