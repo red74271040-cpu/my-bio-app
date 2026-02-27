@@ -1,2 +1,2 @@
-# my-bio-app
-B. xylophilus Target Analysis / Transcription &amp; Translation / Sequence Format Converter / Simple Primer Designer
+# 재선충 분석 툴
+소나무재선충 분석을 위한 바이오인포매틱스 도구입니다.
