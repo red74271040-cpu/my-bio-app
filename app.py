@@ -37,7 +37,7 @@ def check_password():
         st.error("비밀번호가 틀렸습니다.")
 
 if not st.session_state['auth']:
-    st.markdown('<div style="text-align:center; margin-top:150px;"><h1>🌲 Restricted Access</h1><p>허가된 사용자 전용 시스템입니다.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align:center; margin-top:150px;"><h1> Restricted Access</h1><p>허가된 사용자 전용 시스템입니다.</p></div>', unsafe_allow_html=True)
     st.text_input("Access Password", type="password", on_change=check_password, key="pw_input")
     st.stop()
 
@@ -152,3 +152,4 @@ with tab5:
             ax.fill_between(range(len(vals)), vals, color=l_color, alpha=0.1)
             ax.set_ylabel(ylabel); ax.set_xlabel("Position"); ax.set_title(f"{st_type} Analysis")
             st.pyplot(fig)
+
