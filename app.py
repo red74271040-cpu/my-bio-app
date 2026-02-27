@@ -59,7 +59,7 @@ with tab1:
     st.subheader("Target Search & Literature Analysis")
     col_in, col_guide = st.columns([3, 1])
     with col_in:
-        seq_in = st.text_area("DNA Sequence (Target Analysis)", height=150, placeholder="분석할 서열을 입력하세요.")
+        seq_in = st.text_area("Primer Sequence (Target Analysis)", height=150, placeholder="분석할 서열을 입력하세요.")
         if st.button("RUN FULL ANALYSIS", use_container_width=True):
             if len(seq_in) < 15: st.warning("서열이 너무 짧습니다.")
             else:
@@ -152,4 +152,5 @@ with tab5:
             ax.fill_between(range(len(vals)), vals, color=l_color, alpha=0.1)
             ax.set_ylabel(ylabel); ax.set_xlabel("Position"); ax.set_title(f"{st_type} Analysis")
             st.pyplot(fig)
+
 
